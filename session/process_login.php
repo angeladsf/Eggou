@@ -15,14 +15,16 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
     session_start();
     $_SESSION[ 'player_id' ] = $data[ 'player_id' ] ;
     $_SESSION[ 'username' ] = $data[ 'username' ] ;
-
+	
+	
+	
     $player_id = $_SESSION['player_id'];
 
     $query= ("SELECT pet_id FROM pet WHERE pet.player_id=$player_id");
     $row = @mysqli_query ($dbcon, $query);
     $num_rows = mysqli_num_rows($row);
     if ($num_rows > 0) {
-      load ( '../forum.php' ) ;
+      load ( '../kitchen.php' ) ;
     } else {
       load ( '../choice.php' ) ;
     }

@@ -9,6 +9,7 @@ if(isset($_GET["specie"])){
     }
 
 	$player_id = $_SESSION['player_id'];
+	$pet_id = $_SESSION['pet_id'];
 
     $query= ("SELECT MAX(pet_id) FROM pet");
 	$max_id = @mysqli_query ($dbcon, $query);
@@ -37,7 +38,7 @@ if(isset($_GET["specie"])){
 				$q = "INSERT INTO pet(Hygiene, Hunger, Name, Happiness, Health, Energy, Pet_Id, Specie, Player_ID) VALUES (50,50,'$name',50,50,50,$new_id,'$specie',$player_id)";		
 				$result = @mysqli_query($dbcon, $q); // Run the query
 				if ($result) { // If the query ran OK
-					header ("location: forum.php"); 
+					header ("location: kitchen.php"); 
 					exit();
 				} else { // If there was a problem
 					// Error message

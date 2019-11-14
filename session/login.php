@@ -34,6 +34,6 @@
                 <br><p class="submit"><input id = 'submit' type="submit" value="Login" ></p>
             </form>
         </div>    
-    <?php include ('../includes/footer.php'); ?>
+        <?php include ('../includes/footer.php'); ?>
     </body>
 </html>

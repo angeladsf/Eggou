@@ -61,7 +61,7 @@
 				$q = "INSERT INTO player (player_id, username, email, psword, experience, coins) VALUES (' ', '$username', '$e', SHA1('$p'),0, 20)";		
 				$result = @mysqli_query ($dbcon, $q); // Run the query
 				if ($result) { // If the query ran OK
-					header ("location: choice_egg.php"); 
+					header ("location: ../choice.php"); 
 					exit();
 				} else { // If there was a problem
 					// Error message

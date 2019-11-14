@@ -1,0 +1,59 @@
+html,
+body,
+footer {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+canvas {
+    display: block;
+}
+
+.logo_nav {
+    height: auto;
+    width: 20%;
+    position: relative;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+    height: 10%;
+}
+
+h5,
+h6 {
+    padding: 0.5%;
+    margin: 0;
+    margin-right: 2%;
+}
+
+#secretHigiene, #secretFome, #secretEnergia, #secretSaude, #secretFelicidade{
+    display:none;
+}
