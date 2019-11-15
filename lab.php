@@ -1,45 +1,22 @@
-<?php require ('session/mysql_connection.php');
-session_start() ;
-// REDIRECIONAR CASO NÃO ESTEJA LOGIN
-if ( !isset( $_SESSION[ 'player_id' ] ) ) { 
-require ( 'session/login_functions.php' ) ; load() ; }
+<?php 
+	require ('session/mysql_connection.php');
+	session_start() ;
+	// REDIRECIONAR CASO NÃO O LOGIN NÃO TENHA SIDO FEITO
+	if ( !isset( $_SESSION[ 'player_id' ] ) ) { 
+	require ( 'session/login_functions.php' ) ; load() ; }
 
-$player_id = $_SESSION[ 'player_id' ] ;
-
-if(isset($_POST["higiene"]) && isset($_POST["energia"]) && isset($_POST["fome"]) && isset($_POST["felicidade"]) && isset($_POST["saude"])){
-	$hygiene = $_POST["higiene"];
-	$energy = $_POST["energia"];
-	$happiness = $_POST["felicidade"];
-	$health = $_POST["saude"];
-	$hunger = $_POST["fome"];
-  
-	$q = ("UPDATE pet SET Hygiene = $hygiene, Energy = $energy, Happiness = $happiness, Health = $health, Hunger = $hunger WHERE player_id = $player_id");
-	$result = @mysqli_query($dbcon, $q);
-}  
-
+	$player_id = $_SESSION[ 'player_id' ] ;
+	include ( 'includes/getNeeds.php' );
 ?>
 <!doctype html>
 <html lang=en>
-	<head>
-		<title>Eggou</title>
-		<meta charset=utf-8>
-		<link rel="stylesheet" type="text/css" href="eggou.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <meta charset="utf-8" />
-	</head>
+	<?php include ('includes/head.php'); ?>
 	<body>
 		<div id='container'>
 		<?php 
 		include ( 'includes/header.php' ) ;
-		include ( 'sketch/lab_sketch.php' ) ;?>
-		<span id = 'secretHigiene'></span>
-		<span id = 'secretFome'></span>
-		<span id = 'secretEnergia'></span>
-		<span id = 'secretFelicidade'></span>
-		<span id = 'secretSaude'></span>
+		include ( 'sketch/lab_sketch.php' ) ;
+		include ( 'includes/secretIDs.php' );?>
 	</div>
 	</body>
 	<?php include ( 'includes/footer.php' ) ; ?>

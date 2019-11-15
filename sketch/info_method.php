@@ -1,34 +1,44 @@
 <script>
 
 //Loja
-let nomeProd = "<?php echo $nameLoja; ?>";
-let idProd = "<?php echo $idLoja; ?>";
-let priceProd = "<?php echo $priceLoja; ?>";
-let valorProd = "<?php echo $valueLoja; ?>";
-let catProd = "<?php echo $catLoja; ?>";
+let nameStore = "<?php echo $nameStore; ?>";
+let idItem = "<?php echo $idItem; ?>";
+let priceItem = "<?php echo $priceItem; ?>";
+let incrItem = "<?php echo $incrItem; ?>";
+let catItem = "<?php echo $catItem; ?>";
 
 //Variáveis do Jogador
-let moedas = "<?php echo $moeda; ?>";
+let money = "<?php echo $money; ?>";
 let exp = "<?php echo $xp; ?>";
+let player_id = "<?php echo $player_id; ?>";
+
+//Variáveis das needs
+let hunger = "<?php echo $hunger; ?>";
+let energy = "<?php echo $energy; ?>";
+let hygiene = "<?php echo $hygiene; ?>";
+let health = "<?php echo $health; ?>";
+let happiness = "<?php echo $happiness; ?>";
+
+let name = "<?php echo $name; ?>";
 
 
-//Ícone da loja
-class loja_icon{
-    constructor(posX, posY, icon, sizeX, sizeY){
+//Ícone da loja e playground
+class room_icon {
+    constructor(posX, posY, icon, sizeX, sizeY) {
         this.posX = posX;
         this.posY = posY;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.icon = icon;
     }
-    draw_shop(){
+    draw_roomIcon() {
         image(this.icon, this.posX, this.posY, this.sizeX, this.sizeY);
-    }   
+    }
 }
 
-//Ícone e quantidade de moedas
-class money_icon{
-    constructor(posX, posY, icon, sizeX, sizeY, money){
+//Ícone e quantidade de dinheiro
+class money_icon {
+    constructor(posX, posY, icon, sizeX, sizeY, money) {
         this.posX = posX;
         this.posY = posY;
         this.sizeX = sizeX;
@@ -36,31 +46,17 @@ class money_icon{
         this.icon = icon;
         this.money = money;
     }
-    draw_money(){
+    draw_money() {
         image(this.icon, this.posX, this.posY, this.sizeX, this.sizeY);
         fill('#000');
-        text(this.money, (this.posX + this.sizeX),(this.posY + this.sizeY/1.5));
-    }   
-}
-
-
-class playground_icon{
-    constructor(posX, posY, icon, sizeX, sizeY){
-        this.posX = posX;
-        this.posY = posY;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        this.icon = icon;
+        text(this.money, (this.posX + this.sizeX), (this.posY + this.sizeY / 1.5));
     }
-    draw_playground(){
-        image(this.icon, this.posX, this.posY, this.sizeX, this.sizeY);
-    }   
 }
 
 
 //Trocar de quartos
-class room{
-    constructor(posX, posY, name){
+class room {
+    constructor(posX, posY, name) {
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -68,8 +64,9 @@ class room{
         this.right = rArrowIcon;
         this.size = 30;
     }
-    draw_room(){
+    draw_room() {
         image(this.left, this.posX, this.posY, this.size, this.size);
+        color('#000')
         textSize(16);
         text(this.name, this.posX + 70, this.posY + 20);
         image(this.right, this.posX + 200, this.posY, this.size, this.size);
@@ -77,8 +74,8 @@ class room{
 }
 
 
-class inventory{
-    constructor(posX, posY, width, height){
+class inventory {
+    constructor(posX, posY, width, height) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
@@ -87,14 +84,14 @@ class inventory{
         this.size = 80;
     }
 
-    draw_inventory(){
-        fill(90,50,90, 100);
+    draw_inventory() {
+        fill(90, 50, 90, 100);
         rect(this.posX, this.posY, this.width, this.height, this.border);
-    }       
+    }
 }
 
-class level{
-    constructor(posX, posY, width, height, exp){
+class level {
+    constructor(posX, posY, width, height, exp) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
@@ -103,43 +100,86 @@ class level{
     }
 }
 
+// needs
+class need {
+    constructor(posX, posY, width, height, color, name, value) {
+        this.posX = posX;
+        this.posY = posY;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+        this.name = name;
+        this.value = value;
+    }
+    draw_need() {
+        fill('#bbb');
+        rect(this.posX, this.posY, this.width, this.height);
+        fill(this.color);
+        rect(this.posX, this.posY, this.value, this.height);
+        fill('#fff');
+        textSize(14);
+        textStyle(BOLD);
+        text(this.name, this.posX + this.width / 5, this.posY + this.height / 2);
 
-//Setup de objetos
-function setup_main(){
-    necFelicidade = new necessidade(necWidth*2.5, necPosY, necWidth , necHeight, 'red', 'Happiness', felicidade);
-    necHigiene = new necessidade(necWidth*4, necPosY, necWidth , necHeight, 'red', 'Hygiene', higiene);
-    necFome = new necessidade(necWidth*5.5, necPosY, necWidth , necHeight, 'red', 'Hunger', fome);
-    necEnergia = new necessidade(necWidth*7, necPosY, necWidth , necHeight, 'red', 'Energy', energia);
-    necSaude = new necessidade(necWidth*8.5, necPosY, necWidth , necHeight, 'red', 'Health', saude);
-    iconLoja = new loja_icon(100, 20, storeIcon, 50,50);
-    iconMoney = new money_icon(250, 25, coinIcon, 40,40, moedas);
-    iconPlayground = new playground_icon(1200, 25, playgroundIcon, 50,50);
-    kitchen = new room(550, 50, 'Kitchen' );
-    bathroom = new room(550, 50, 'Bathroom' );
-	bedroom = new room(550, 50, 'Bedroom' );
-	lab = new room(550, 50, 'Lab' );
-    inventory = new inventory(canvasWidth*0.85, canvasHeight*0.2, canvasWidth * 0.1, canvasHeight * 0.65);
+        if (this.value >= 71) {
+            this.color = green;
+        } else if (this.value >= 36 && 71 > this.value) {
+            this.color = yellow;
+        } else if (36 > this.value) {
+            this.color = red;
+        }
+
+    }
 }
 
 
-function decrease_necessidade(necessidades, secretIDs, link){
-      setTimeout(function() {
+//Setup de objetos
+function setup_main() {
+    nHappiness = new need(needWidth * 2.5, needPosY, needWidth, needHeight, 'red', 'Happiness', happiness);
+    nHygiene = new need(needWidth * 4, needPosY, needWidth, needHeight, 'red', 'Hygiene', hygiene);
+    nHunger = new need(needWidth * 5.5, needPosY, needWidth, needHeight, 'red', 'Hunger', hunger);
+    nEnergy = new need(needWidth * 7, needPosY, needWidth, needHeight, 'red', 'Energy', energy);
+    nHealth = new need(needWidth * 8.5, needPosY, needWidth, needHeight, 'red', 'Health', health);
+    iconLoja = new room_icon(100, 20, storeIcon, 50, 50);
+    iconMoney = new money_icon(250, 25, coinIcon, 40, 40, money);
+    iconPlayground = new room_icon(1200, 25, playgroundIcon, 50, 50);
+    kitchen = new room(550, 50, 'Kitchen');
+    bathroom = new room(550, 50, 'Bathroom');
+    bedroom = new room(550, 50, 'Bedroom');
+    lab = new room(550, 50, 'Lab');
+    inventory = new inventory(canvasWidth * 0.85, canvasHeight * 0.2, canvasWidth * 0.1, canvasHeight * 0.65);
+}
 
-        for(let i = 0; i< necessidades.length; i++){
-        if(necessidades[i].value > 0){
-          necessidades[i].value = parseFloat(necessidades[i].value) - 0.001;
-          $(secretIDs[i]).text(necessidades[i].value);
+
+function drawNeedsIcons() {
+    nHappiness.draw_need();
+    nHygiene.draw_need();
+    nHunger.draw_need();
+    nEnergy.draw_need();
+    nHealth.draw_need();
+    iconLoja.draw_roomIcon();
+    iconMoney.draw_money();
+    iconPlayground.draw_roomIcon();
+}
+
+
+function decrease_need(needs, secretIDs, link) {
+    setTimeout(function() {
+
+        for(let i = 0; i< needs.length; i++){
+        if(needs[i].value > 0){
+          needs[i].value = parseFloat(needs[i].value) - 0.001;
+          $(secretIDs[i]).text(needs[i].value);
           $(secretIDs[i]).hide();
-
           $.post({
             url: link,
             type: "post",
             data: {
-              higiene: necessidades[0].value, 
-              fome: necessidades[1].value,
-              energia: necessidades[2].value,
-              felicidade: necessidades[3].value,
-              saude: necessidades[4].value,
+              newHygiene: needs[0].value, 
+              newHunger: needs[1].value,
+              newEnergy: needs[2].value,
+              newHappiness: needs[3].value,
+              newHealth: needs[4].value,
             }
           },
           function(data, status){
@@ -148,14 +188,13 @@ function decrease_necessidade(necessidades, secretIDs, link){
         }
         }
       }, 5000);//milliseconds
-    }
+}
 
 
-function decrease_tudo(room){
-    var necessidades = [necHigiene, necFome, necEnergia, necFelicidade, necSaude];
-    var secrets = ['#secretHigiene', '#secretFome', '#secretEnergia', '#secretFelicidade', '#secretSaude']
-
-    decrease_necessidade(necessidades, secrets , room);
+function decreaseAllNeeds(room) {
+    var arrayN = [nHygiene, nHunger, nEnergy, nHappiness, nHealth];
+    var arrayS = ['#secretHygiene', '#secretHunger', '#secretEnergy', '#secretHappiness', '#secretHealth']
+    decrease_need(arrayN, arrayS, room);
 }
 
 </script>
