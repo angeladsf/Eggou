@@ -20,6 +20,7 @@ var offsetX, offsetY;
 function draw() {
     background('#8cb8e4');
     drawNeedsIcons();
+    iconPlayground.draw_roomIcon();
     bathroom.draw_room();
     inventory.draw_inventory();
     shower = image(showerIcon, x, y, s, s);
@@ -62,8 +63,8 @@ function mousePressed() {
     let whereIsMouseX = mouseX;
     let whereIsMouseY = mouseY;
 
-    if (whereIsMouseX > iconLoja.posX && whereIsMouseY > iconLoja.posY &&
-        whereIsMouseX < (iconLoja.posX + iconLoja.sizeX) && whereIsMouseY < (iconLoja.posY + iconLoja.sizeY)) {
+    if (whereIsMouseX > iconStore.posX && whereIsMouseY > iconStore.posY &&
+        whereIsMouseX < (iconStore.posX + iconStore.sizeX) && whereIsMouseY < (iconStore.posY + iconStore.sizeY)) {
         window.open('store.php', '_self');
     } else if (whereIsMouseX > kitchen.posX && whereIsMouseY > kitchen.posY &&
         whereIsMouseX < (kitchen.posX + kitchen.size) && whereIsMouseY < (kitchen.posY + kitchen.size)) {
@@ -71,6 +72,9 @@ function mousePressed() {
     } else if (whereIsMouseX > kitchen.posX + 200 && whereIsMouseY > kitchen.posY &&
         whereIsMouseX < (kitchen.posX + kitchen.size + 200) && whereIsMouseY < (kitchen.posY + kitchen.size)) {
         window.open('bedroom.php', '_self');
+    }else if (whereIsMouseX > 1200 && whereIsMouseY > 25 &&
+        whereIsMouseX < 1250 && whereIsMouseY < 75) {
+        window.open('playground.php', '_self');
     }
 
 

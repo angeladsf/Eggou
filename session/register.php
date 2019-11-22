@@ -58,7 +58,9 @@
 			}
 			if (empty($errors)) { // If there are no errors. register the user in the database
 				// Make the query
-				$q = "INSERT INTO player (player_id, username, email, psword, experience, coins) VALUES (' ', '$username', '$e', SHA1('$p'),0, 20)";		
+				$date = date("Y-m-d h:i:sa");
+				$sqlDate = date('Y-m-d h:i:sa', strtotime($date));
+				$q = "INSERT INTO player (player_id, username, email, psword, experience, coins, close_time) VALUES (' ', '$username', '$e', SHA1('$p'),0, 20, $sqlDate)";		
 				$result = @mysqli_query ($dbcon, $q); // Run the query
 				if ($result) { // If the query ran OK
 					header ("location: ../choice.php"); 

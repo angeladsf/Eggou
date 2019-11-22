@@ -12,6 +12,8 @@ let money = "<?php echo $money; ?>";
 let exp = "<?php echo $xp; ?>";
 let player_id = "<?php echo $player_id; ?>";
 
+
+
 //Variáveis das needs
 let hunger = "<?php echo $hunger; ?>";
 let energy = "<?php echo $energy; ?>";
@@ -90,6 +92,26 @@ class inventory {
     }
 }
 
+
+class inventoryItem{
+    constructor(value, ID, path, posX, posY, quant) {
+        this.value = value;
+        this.ID = ID;
+        this.path = path;
+        this.posX = posX;
+        this.posY = posY;
+        this.quant = quant;
+        this.icon = loadImage(this.path);
+    }
+
+    draw_inItem() {
+        image(this.icon, this.posX, this.posY, 55, 55);
+    }
+
+}
+
+
+
 class level {
     constructor(posX, posY, width, height, exp) {
         this.posX = posX;
@@ -132,7 +154,6 @@ class need {
     }
 }
 
-
 //Setup de objetos
 function setup_main() {
     nHappiness = new need(needWidth * 2.5, needPosY, needWidth, needHeight, 'red', 'Happiness', happiness);
@@ -140,14 +161,16 @@ function setup_main() {
     nHunger = new need(needWidth * 5.5, needPosY, needWidth, needHeight, 'red', 'Hunger', hunger);
     nEnergy = new need(needWidth * 7, needPosY, needWidth, needHeight, 'red', 'Energy', energy);
     nHealth = new need(needWidth * 8.5, needPosY, needWidth, needHeight, 'red', 'Health', health);
-    iconLoja = new room_icon(100, 20, storeIcon, 50, 50);
+    iconStore = new room_icon(100, 20, storeIcon, 50, 50);
+    iconHouse = new room_icon(100, 20, houseIcon, 50, 50);
+    iconHouse1 = new room_icon(1200, 20, houseIcon, 50, 50);
     iconMoney = new money_icon(250, 25, coinIcon, 40, 40, money);
     iconPlayground = new room_icon(1200, 25, playgroundIcon, 50, 50);
     kitchen = new room(550, 50, 'Kitchen');
     bathroom = new room(550, 50, 'Bathroom');
     bedroom = new room(550, 50, 'Bedroom');
     lab = new room(550, 50, 'Lab');
-    inventory = new inventory(canvasWidth * 0.85, canvasHeight * 0.2, canvasWidth * 0.1, canvasHeight * 0.65);
+    inventory = new inventory(canvasWidth * 0.85, canvasHeight * 0.17, canvasWidth * 0.1, canvasHeight * 0.65);
 }
 
 
@@ -157,9 +180,8 @@ function drawNeedsIcons() {
     nHunger.draw_need();
     nEnergy.draw_need();
     nHealth.draw_need();
-    iconLoja.draw_roomIcon();
+    iconStore.draw_roomIcon();
     iconMoney.draw_money();
-    iconPlayground.draw_roomIcon();
 }
 
 

@@ -19,12 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query    = ("SELECT pet_id FROM pet WHERE pet.player_id=$player_id");
         $row      = @mysqli_query($dbcon, $query);
         $num_rows = mysqli_num_rows($row);
+        
+
         if ($num_rows > 0) {
+            include ("updateNeeds.php");
             load('../kitchen.php');
         } else {
             load('../choice.php');
         }
-        
     }
     // If it fails, set the error messages
     else {
@@ -34,5 +36,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_close($dbcon);
 }
 // If it unsuccessful continue to display the login page
-include('login.php');
+include ('login.php');
 ?>

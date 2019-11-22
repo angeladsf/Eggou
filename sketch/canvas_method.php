@@ -48,12 +48,14 @@ let needPosY = canvasHeight - canvasHeight/6;
 
 function preload() {
   storeIcon = loadImage('../eggou/assets/store.png');
+  houseIcon = loadImage('../eggou/assets/house.png');
   coinIcon = loadImage('../eggou/assets/coin.png');
   rArrowIcon = loadImage('../eggou/assets/right_arrow.png');
   lArrowIcon = loadImage('../eggou/assets/left_arrow.png');
   showerIcon = loadImage('../eggou/assets/shower.png');
   lampIcon = loadImage('../eggou/assets/idea.png');
   playgroundIcon = loadImage('../eggou/assets/playground.png');
+  playgroundBG = loadImage('../eggou/assets/playgroundBG.png');
 }
 
 </script>

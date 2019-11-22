@@ -4,13 +4,16 @@ session_start() ;
 if ( !isset( $_SESSION[ 'player_id' ] ) ) { 
 require ( 'session/login_functions.php' ) ; load() ; }
 $player_id = $_SESSION[ 'player_id' ] ;
+
 if(isset($_POST["newValue"])){
   $newValue = $_POST["newValue"];
   
   $q = ("UPDATE pet SET Hygiene = $newValue WHERE player_id = $player_id");
   $result = @mysqli_query($dbcon, $q);
 }
+
 include ( 'includes/getNeeds.php' );
+include ( 'includes/saveTime.php' ) ;
 ?>
 
 <!doctype html>
