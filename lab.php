@@ -20,6 +20,9 @@
 		$q1 = ("UPDATE inventory SET quantity = quantity - 1 WHERE player_id = ".$player_id." and item_id = ".$itemID."");
 		$result1 = @mysqli_query($dbcon, $q1);
 
+		$q3 = ("UPDATE pet SET experience = experience + 1.5  WHERE player_id = ".$player_id."");
+		$result3 = @mysqli_query($dbcon, $q3);
+
 	  }
 
 

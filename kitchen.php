@@ -23,6 +23,9 @@
 
 		$q2 = ("UPDATE pet SET Hygiene = ".$hygieneValue."  WHERE player_id = ".$player_id."");
 		$result2 = @mysqli_query($dbcon, $q2);
+
+		$q3 = ("UPDATE pet SET experience = experience + 1.5  WHERE player_id = ".$player_id."");
+		$result3 = @mysqli_query($dbcon, $q3);
 	  }
 
 

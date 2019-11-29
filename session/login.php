@@ -11,14 +11,14 @@
     <div id='container'>
         <?php
             include ( '../includes/header_login.php' ) ;
-            // Display any error messages if present.
+            // Escrever mensagens de erro
             if ( isset( $errors ) && !empty( $errors ) ){
             echo '<p id="err_msg">A problem occurred:<br>' ;
             foreach ( $errors as $msg ) { echo " - $msg<br>" ; }
             echo '<p id="err_msg">Please try again or <a href="register.php">Register</a></p>' ;
             }
         ?>
-        <!-- Display the login form fields -->
+        <!-- formulário do login -->
         <div class = 'login_form'>
             <h2>Login</h2><br>
             <h3>Enter your user data</h3><br>

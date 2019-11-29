@@ -1,5 +1,4 @@
-<?php include ( 'canvas_method.php' ) ; ?>
-<?php include ( 'info_method.php' ) ; ?>
+<?php include ( 'methods.php' ) ; ?>
 
 <script>
 
@@ -30,6 +29,7 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight);
     setup_main();
 
+    // adicionar os medicamentos a um array
     for(i=0; i<medValue.length; i++){
         for(k = 0; k - 1 < medQuant[i]; k++){
             j = new inventoryItem(medValue[i], medId[i],medPath[i], parseInt(widthStore[i]), parseInt(heightStore[i]), k);
@@ -43,12 +43,12 @@ function setup() {
 
 function draw() {
     background('#f9a3a3');
-    inventory.draw_inventory();
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     lab.draw_room();
     decreaseAllNeeds('lab.php');
 
+    // desenhar um item j vazes (j é a quantidade no inventário)
     for(i=0; i< arrayMed.length; i++){
         let j = 0;
         if(arrayMed[i].quant > j){
@@ -56,13 +56,14 @@ function draw() {
             j++;
         }
 
-        // Is mouse over object
+        // Se o rato estiver em cima do item
         if (mouseX > arrayMed[i].posX && mouseX < arrayMed[i].posX + 55 && mouseY > arrayMed[i].posY && mouseY < arrayMed[i].posY + 55) {
             rollover = true;
         } else {
             rollover = false;
         }
 
+        // ajustar a posição do item enquanto estiver a ser arrastado
         if (dragging[i]) {
             arrayMed[i].posX = mouseX + offsetX;
             arrayMed[i].posY = mouseY + offsetY;
@@ -100,15 +101,17 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-    // Quit dragging
+    // Parar dragging
     for(let i= 0; i< arrayMed.length; i++){
         dragging[i] = false;
 
         if (arrayMed[i].posX < 1000 && nHealth.value <= 100) {
-            if (parseInt(nHealth.value) + parseInt(arrayMed[i].value) > 100){
-                nHealth.value = 100;
+            arrayMed[i].posX = 100000;
+
+            if ((parseFloat(nHealth.value) + parseInt(arrayMed[i].value)) < 100){
+                nHealth.value = parseFloat(nHealth.value)+ parseInt(arrayMed[i].value);
             }else{
-                nHealth.value = parseInt(nHealth.value) + parseInt(arrayMed[i].value);
+                nHealth.value = 100;
             }
 
             $.post({
@@ -121,8 +124,6 @@ function mouseReleased() {
                 },
                 function(data, status) {
                 });
-            delete arrayMed[i];
-            break;
         }
     }
 }

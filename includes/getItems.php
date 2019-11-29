@@ -18,7 +18,7 @@
     $index_itemsM = 0;
 
     while($row = mysqli_fetch_array($queryResult_items, MYSQLI_ASSOC)){
-        if($row['Category'] == 'Food'){ // loop to store the data in an associative array.
+        if($row['Category'] == 'Food'){ // loop para guardar dados num array
             $itemsNameF[$index_itemsF] = $row['Name']; 
             $itemsPriceF[$index_itemsF] = $row['Price']; 
             $itemsIdsF[$index_itemsF] = $row['Item_Id'];
@@ -26,7 +26,7 @@
             $itemsPathF[$index_itemsF] = $row['ImagePath']; 
             $index_itemsF++;
         }
-        if($row['Category'] == 'Medicine'){ // loop to store the data in an associative array.
+        if($row['Category'] == 'Medicine'){ // loop para guardar dados num array
             $itemsNameM[$index_itemsM] = $row['Name']; 
             $itemsPriceM[$index_itemsM] = $row['Price']; 
             $itemsIdsM[$index_itemsM] = $row['Item_Id'];

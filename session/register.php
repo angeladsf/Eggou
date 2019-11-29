@@ -9,39 +9,36 @@
 	<body>
 		<div id="container">
 			<?php include("../includes/header_register.php"); ?>
-		<div id="content"><!--Start of the page-specific content-->
+		<div id="content">
 		<?php
-		require ('mysql_connection.php'); // Connect to the database
+		require ('mysql_connection.php');
 		
-		// Has the form been submitted?
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$errors = array(); // Start an errors array
-			// Trim the username
+			$errors = array(); // Começar um array de erros
+
 			$unme = trim($_POST['username']);
-			// Strip HTML tags and apply escaping
 			$stripped = mysqli_real_escape_string($dbcon, strip_tags($unme));
-			// Get string lengths
+			// comprimento do nome
 			$strLen = mb_strlen($stripped, 'utf8');
-			// Check stripped string
+
 			if( $strLen < 1 ) {
 				$errors[] = '<p id="err_msg">You forgot to enter your secret username.</p>';
 			}else{
 				$username = $stripped;
 			}
-			//Set the email variable to FALSE
+
 			$e = FALSE;									
-			// Check that an email address has been entered				
+			// verificar se email foi introduzido			
 			if (empty($_POST['email'])) {
 				$errors[] = '<p id="err_msg">You forgot to enter your email address.</p>';
 			}
-			//Remove spaces from beginning and end of the email address and validate it	
+			//Remover espaços no início/fim
 			if (filter_var((trim($_POST['email'])), FILTER_VALIDATE_EMAIL)) {	
-			//A valid email address is then registered
 				$e = mysqli_real_escape_string($dbcon, (trim($_POST['email'])));
 			}else{									
 				$errors[] = '<p id="err_msg">Your email is not in the correct format.</p>';
 			}
-			// Check that a password has been entered, if so, does it match the confirmed password
+			// verificar e confirmar password
 			if (empty($_POST['psword1'])){
 				$errors[] ='<p id="err_msg">Please enter a valid password.</p>';
 			}
@@ -56,35 +53,38 @@
 			}else{
 				$errors[] = '<p id="err_msg">Your two password do not match.</p>';
 			}
-			if (empty($errors)) { // If there are no errors. register the user in the database
-				// Make the query
+			if (empty($errors)) { // registar caso não existam erros
+				$query= ("SELECT MAX(player_id) FROM player");
+				$max_id = @mysqli_query ($dbcon, $query);
+				$new_id = ($max_id + 1);
+
 				$date = date("Y-m-d h:i:sa");
 				$sqlDate = date('Y-m-d h:i:sa', strtotime($date));
-				$q = "INSERT INTO player (player_id, username, email, psword, experience, coins, close_time) VALUES (' ', '$username', '$e', SHA1('$p'),0, 20, $sqlDate)";		
-				$result = @mysqli_query ($dbcon, $q); // Run the query
-				if ($result) { // If the query ran OK
+				$q = "INSERT INTO player (player_id, username, email, psword, coins, close_time) VALUES ($new_id, '$username', '$e', SHA1('$p'), 20, $sqlDate)";		
+				$result = @mysqli_query ($dbcon, $q); 
+
+				if ($result) { // se a query correu
 					header ("location: ../choice.php"); 
 					exit();
-				} else { // If there was a problem
-					// Error message
+				} else {
 					echo '<h3 class = "title_err">System Error</h3>
 					<p id="err_msg">You could not be registered due to a system error. We apologize for any inconvenience.</p>'; 
-					// Debugging message:
+					// mensagem de debug
 					echo '<p id="err_msg">' . mysqli_error($dbcon) . '<br><br>Query: ' . $q . '</p>';
-				} // End of if ($result)
-				mysqli_close($dbcon); // Close the database connection
-				// Include the footer and quit the script
+				} 
+				mysqli_close($dbcon); // fechar conexão à base de dados
+
 				include ('includes/footer.php'); 
 				exit();
-			} else { // Display the errors
+			} else { // mostrar erros
 				echo '<h3 class = "title_err">Error!</h3>
 				<p id="err_msg">The following error(s) occurred:<br>';
-				foreach ($errors as $msg) { // Display each error
+				foreach ($errors as $msg) {
 					echo '<p id = "err_msg">- $msg<br>\n</p>';
 				}
 				echo '</p><h3 class = "title_err">Please try again.</h3><p><br></p>';
-			}// End of if (empty($errors))
-		} // End of the main Submit conditionals
+			}
+		}
 		?>
 
 			<div id="midcol" class = 'register_form'>

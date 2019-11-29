@@ -1,5 +1,16 @@
-<?php include ( 'canvas_method.php' ) ; ?>
-<?php include ( 'info_method.php' ) ; ?>
+<?php include ( 'methods.php' ) ; 
+
+//VARIÁVEIS DA LOJA
+$q_store = ("SELECT name, item_id, price, value, category FROM item");
+$queryStore = @mysqli_query($dbcon, $q_store);
+$rowStore = mysqli_fetch_array ($queryStore, MYSQLI_ASSOC) ;
+$nameStore = $rowStore['name'];
+$idItem = $rowStore['item_id'];
+$priceItem = $rowStore['price'];
+$incrItem = $rowStore['value'];
+$catItem = $rowStore['category'];
+
+?>
 
 <script>
 let foodName =<?php echo json_encode($itemsNameF);?>;
@@ -14,6 +25,10 @@ let medicineValue =<?php echo json_encode($itemsValueM);?>;
 let medicineId =<?php echo json_encode($itemsIdsM);?>;
 let medicinePath =<?php echo json_encode($itemsPathM);?>;
 
+let idItem = "<?php echo $idItem; ?>";
+let priceItem = "<?php echo $priceItem; ?>";
+let incrItem = "<?php echo $incrItem; ?>";
+let catItem = "<?php echo $catItem; ?>";
 
 let w = canvasWidth*0.2;
 let widthStore = [w, w + 130, w + 260, w + 390, w + 520];
@@ -54,8 +69,8 @@ class item{
 }
 
 function buy_item(price, ID){
+    // comprar item caso exista dinheiro suficiente
     if(money >= price){
-        iconMoney.money -= price;
         money -= price;
         $.post({
             url: 'store.php',
@@ -91,7 +106,8 @@ function draw_store(){
 function setup() {
     createCanvas(canvasWidth, canvasHeight);
     setup_main();  
-      
+
+    // criar itens  
     for(i=0; i< foodName.length; i++){
         j = new item(foodName[i],parseInt(foodPrice[i]), foodValue[i], foodId[i], foodPath[i], widthStore[i], canvasHeight*0.15 );
         arrayFood.push(j);
@@ -109,9 +125,8 @@ function draw() {
     draw_store();
     iconHouse.draw_roomIcon();
     textSize(14);
-    
+    drawMoney(250, 25, coinIcon, 40, 40, money);
     iconPlayground.draw_roomIcon();
-    iconMoney.draw_money();
     decreaseAllNeeds('store.php');
     if (food){
         for (let i = 0; i < arrayFood.length; i++) {
@@ -133,19 +148,20 @@ function mouseClicked() {
         window.open('kitchen.php', '_self');
     }
 
+    // secção de alimentos 
     if (whereIsMouseX > canvasWidth * 0.40 && whereIsMouseY > canvasHeight*0.05 &&
         whereIsMouseX < (canvasWidth * 0.40 + 70) && whereIsMouseY < (canvasHeight*0.05 + 25)) {
-            food = true;
-    }
-
-    if (whereIsMouseX > canvasWidth * 0.50 && whereIsMouseY > canvasHeight*0.05 &&
+        food = true;
+    }//secção de medicamentos
+    else if (whereIsMouseX > canvasWidth * 0.50 && whereIsMouseY > canvasHeight*0.05 &&
         whereIsMouseX < (canvasWidth * 0.50 + 90) && whereIsMouseY < (canvasHeight*0.05 + 25)) {
-            food = false;
+        food = false;
     }else if (whereIsMouseX > 1200 && whereIsMouseY > 25 &&
         whereIsMouseX < 1250 && whereIsMouseY < 75) {
         window.open('playground.php', '_self');
     }
 
+    // comprar item (botão buy)
     for (let i = 0; i < arrayFood.length; i++) {
         if (food && whereIsMouseX > arrayFood[i].posX+40 && whereIsMouseY > arrayFood[i].posY+140 && whereIsMouseX < arrayFood[i].posX+70 && whereIsMouseY < arrayFood[i].posY+160) {
             buy_item(arrayFood[i].price, arrayFood[i].ID);
@@ -153,18 +169,6 @@ function mouseClicked() {
         if (!food && whereIsMouseX > arrayFood[i].posX+40 && whereIsMouseY > arrayFood[i].posY+140 && whereIsMouseX < arrayFood[i].posX+70 && whereIsMouseY < arrayFood[i].posY+160) {
             buy_item(arrayMedicine[i].price, arrayMedicine[i].ID);
         }
-    }
-}
-
-function changeToFood() {
-    for (let i = 0; i < arrayFood.length; i++) {
-        arrayFood[i].draw_item();
-    }
-}
-
-function changeToMedicine() {
-    for (let i = 0; i < arrayMedicine.length; i++) {
-        arrayMedicine[i].draw_item();
     }
 }
 

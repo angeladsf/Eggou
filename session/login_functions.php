@@ -1,34 +1,29 @@
 <?php
-// Function for loading the URL of pages
 function load($page = 'login.php')
 {
-    // The code for setting the page URL
     $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-    // Trim the URL
     $url = rtrim($url, '/\\');
     $url .= '/' . $page;
-    //Redirect to the page and exit the script. 
     header("Location: $url");
     exit();
 }
-// Create a function to check user name and password 
+// verificar username e password
 function validate($dbcon, $username = '', $p = '')
 {
-    // Initiate the array to hold the error messages 
     $errors = array();
-    // Has the user name been entered?
+    // nome de utilizador foi inserido?
     if (empty($username)) {
         $errors[] = 'You forgot to enter your user name';
     } else {
         $username = mysqli_real_escape_string($dbcon, trim($username));
     }
-    // Has the password been entered
+    // password inserida?
     if (empty($p)) {
         $errors[] = 'Enter your password.';
     } else {
         $p = mysqli_real_escape_string($dbcon, trim($p));
     }
-    // If everything is OK select the player_id and the user name from the members' table
+    // selecionar o player_id e username da tabela player se tudo correr bem
     if (empty($errors)) {
         $q      = "SELECT player_id, username FROM player WHERE username='$username' AND psword=SHA1('$p')";
         $result = mysqli_query($dbcon, $q);
@@ -38,13 +33,11 @@ function validate($dbcon, $username = '', $p = '')
                 true,
                 $row
             );
-        }
-        // If the user name and password do not match the database record, create an error message
-        else {
+        }else {
             $errors[] = 'The user name and password do not match our records.';
         }
     }
-    // Retrieve the error messages
+    //mostrar mensagens de erro
     return array(
         false,
         $errors

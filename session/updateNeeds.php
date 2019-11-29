@@ -1,4 +1,5 @@
 <?php
+    // atualizar necessidades no login
     $getDate  = ("SELECT UNIX_TIMESTAMP() - UNIX_TIMESTAMP(close_date) from player where Player_ID = ".$player_id."");
     $result = @mysqli_query($dbcon, $getDate);
     $a = mysqli_fetch_assoc($result);
@@ -49,6 +50,5 @@
             $update  = ("UPDATE pet set health = health -".$difference." where player_id = ".$player_id."");
             $updateNeed  = @mysqli_query($dbcon, $update);
         }
-
     }
 ?>

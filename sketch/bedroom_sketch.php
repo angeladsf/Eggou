@@ -1,5 +1,4 @@
-<?php include ( 'canvas_method.php' ) ; ?>
-<?php include ( 'info_method.php' ) ; ?>
+<?php include ( 'methods.php' ) ; ?>
 
 <script>
 
@@ -18,11 +17,12 @@ function draw() {
     drawNeedsIcons();
     bedroom.draw_room();
     iconPlayground.draw_roomIcon();
-    inventory.draw_inventory();
     lamp = image(lampIcon, x, y, s, s);
     decreaseAllNeeds('bedroom.php');
 
+    // escurecer o ecrã se a luz estiver apagada
     if (!isVisible) {
+        fill(20,20,20,50)
         rect(0, 0, canvasWidth, canvasHeight, 0)
     }
 
@@ -42,7 +42,7 @@ function draw() {
                 });
 
         }
-    }, 1000); //milliseconds 
+    }, 1000);
 }
 
 function mouseClicked() {
@@ -63,6 +63,7 @@ function mouseClicked() {
         window.open('playground.php', '_self');
     }
 
+    // apagar/ acender a luz
     if (whereIsMouseX > x && whereIsMouseY > y && whereIsMouseX < x + s && whereIsMouseY < y + s) {
         isVisible = !isVisible;
     }

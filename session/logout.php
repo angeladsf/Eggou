@@ -1,6 +1,6 @@
 <?php
     session_start() ;
-    // Redirect the user if not logged in
+    // Redirecionar o utilizador
     if ( !isset( $_SESSION[ 'player_id' ] ) ) { 
     require ('login_functions.php' ) ; load() ; 
     }

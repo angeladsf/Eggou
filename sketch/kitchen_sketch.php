@@ -1,5 +1,4 @@
-<?php include ( 'canvas_method.php' ) ; ?>
-<?php include ( 'info_method.php' ) ; ?>
+<?php include ( 'methods.php' ) ; ?>
 
 <script>
 
@@ -21,7 +20,7 @@ let x = canvasWidth * 0.88;
 let y = 200;
 
 
-var rollover = false; // Is the mouse over the ellipse?
+var rollover = false;
 var offsetX, offsetY;
 
 function setup() {
@@ -42,7 +41,6 @@ function setup() {
 
 function draw() {
     background('#f9f793');
-    inventory.draw_inventory();
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     kitchen.draw_room();
@@ -55,7 +53,7 @@ function draw() {
             j++;
         }
 
-        // Is mouse over object
+        // se o rato estiver sobre o objeto
         if (mouseX > arrayFood[i].posX && mouseX < arrayFood[i].posX + 55 && mouseY > arrayFood[i].posY && mouseY < arrayFood[i].posY + 55) {
             rollover = true;
         } else {
@@ -99,23 +97,24 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-    // Quit dragging
+    // parar dragging
     for(let i= 0; i< arrayFood.length; i++){
         dragging[i] = false;
 
-        if (arrayFood[i].posX < 1000 && nHunger.value <= 100) {
+        // ajustar valor da fome e higiene
+        if (arrayFood[i].posX < 1000 && (parseFloat(nHunger.value))< 100) {
             arrayFood[i].posX = 100000;
 
-            if (parseInt(nHunger.value) + parseInt(arrayFood[i].value) > 100){
-                nHunger.value = 100;
+            if (parseFloat(nHunger.value) + parseInt(arrayFood[i].value) < 100){
+                nHunger.value = parseFloat(nHunger.value) + parseInt(arrayFood[i].value);
             }else {
-                nHunger.value = parseInt(nHunger.value) + parseInt(arrayFood[i].value);
+                nHunger.value = 100;
             }
 
-            if (nHygiene.value - foodValue[i] < 0){
-                nHygiene.value = 0;
+            if (parseFloat(nHygiene.value) - parseInt(arrayFood[i].value)/2 > 0){
+                nHygiene.value = parseFloat(nHygiene.value) - (parseFloat(arrayFood[i].value)/2);
             }else{
-                nHygiene.value = parseInt(nHygiene.value) - (parseInt(arrayFood[i].value)/2);
+                nHygiene.value = 0;
             }
 
             $.post({
@@ -129,7 +128,6 @@ function mouseReleased() {
                 },
                 function(data, status) {
                 });
-            break;
         }
     }
 }

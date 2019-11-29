@@ -1,5 +1,4 @@
-<?php include ( 'canvas_method.php' ) ; ?>
-<?php include ( 'info_method.php' ) ; ?>
+<?php include ( 'methods.php' ) ; ?>
 
 <script>
 function setup() {
@@ -12,29 +11,33 @@ let y = 200;
 let initialX = canvasWidth * 0.88;
 let initialY = 200;
 let s = 70;
-var dragging = false; // Is the object being dragged?
-var rollover = false; // Is the mouse over the ellipse?
+var dragging = false; // objeto não está a ser arrastado
+var rollover = false; // rato não está em cima do objeto
 var offsetX, offsetY;
 
+
+function setup(){
+    createCanvas(canvasWidth, canvasHeight);
+    setup_main();
+}
 
 function draw() {
     background('#8cb8e4');
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     bathroom.draw_room();
-    inventory.draw_inventory();
     shower = image(showerIcon, x, y, s, s);
     
     decreaseAllNeeds('bathroom.php');
 
-    // Is mouse over object
+    // se o rato estiver no item
     if (mouseX > x && mouseX < x + s && mouseY > y && mouseY < y + s) {
         rollover = true;
     } else {
         rollover = false;
     }
 
-    // Adjust location if being dragged
+    // ajustar a localização caso o item esteja a ser arrastado
     if (dragging) {
         x = mouseX + offsetX;
         y = mouseY + offsetY;
@@ -54,7 +57,7 @@ function draw() {
 
                 });
         }
-    }, 1000); //milliseconds 
+    }, 1000); //milisegundos 
 
 }
 
@@ -80,14 +83,13 @@ function mousePressed() {
 
     if (whereIsMouseX > x && whereIsMouseY > y && whereIsMouseX < x + s && whereIsMouseY < y + s && nHygiene.value < 100) {
         dragging = true;
-        // If so, keep track of relative location of click to corner of rectangle
         offsetX = x - mouseX;
         offsetY = y - mouseY;
     }
 }
 
 function mouseReleased() {
-    // Quit dragging
+    // parar o drag
     dragging = false;
     x = initialX;
     y = initialY;

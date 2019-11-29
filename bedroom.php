@@ -12,6 +12,9 @@
 
 		$q = ("UPDATE pet SET Energy = $newValue WHERE player_id = $player_id");
 		$result = @mysqli_query($dbcon, $q);
+
+		$q3 = ("UPDATE pet SET experience = experience + 0.01  WHERE player_id = ".$player_id."");
+		$result2 = @mysqli_query($dbcon, $q3);
 	}	
 	include ( 'includes/getNeeds.php' );
 ?>

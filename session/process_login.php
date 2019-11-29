@@ -1,15 +1,14 @@
 <?php
-// Was the form submitted?
+// o formulário foi submetido?
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Connect to the database .
+    // conectar à base de dados
     require('mysql_connection.php');
-    // Load the validation functions.
+    // carregar funções de validação
     require('login_functions.php');
-    // Check the login data
+    // confirmar dados do login
     list($check, $data) = validate($dbcon, $_POST['username'], $_POST['psword']);
-    // If successful, set session data and display the forum.php page
+    // se for com sucesso, criar variáveis de sessão
     if ($check) {
-        // Access the session details
         session_start();
         $_SESSION['player_id'] = $data['player_id'];
         $_SESSION['username']  = $data['username'];
@@ -17,10 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $player_id = $_SESSION['player_id'];
         
         $query    = ("SELECT pet_id FROM pet WHERE pet.player_id=$player_id");
+        $_SESSION['pet_id']  = $data['pet_id'];
+        $pet_id = $_SESSION['pet_id'];
         $row      = @mysqli_query($dbcon, $query);
         $num_rows = mysqli_num_rows($row);
         
-
+        // já tem animal de estimação?
         if ($num_rows > 0) {
             include ("updateNeeds.php");
             load('../kitchen.php');
@@ -28,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             load('../choice.php');
         }
     }
-    // If it fails, set the error messages
+    // caso houver algum erro
     else {
         $errors = $data;
     }
-    // Close the database connection.
+    // fechar conexão com base de dados
     mysqli_close($dbcon);
 }
-// If it unsuccessful continue to display the login page
+// continuar na página do login caso o login não seja efetuado com sucesso
 include ('login.php');
 ?>

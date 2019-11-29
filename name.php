@@ -35,7 +35,7 @@ if(isset($_GET["specie"])){
 			
 			if (empty($errors)) { // If there are no errors. register the user in the database
 				// Make the query
-				$q = "INSERT INTO pet(Hygiene, Hunger, Name, Happiness, Health, Energy, Pet_Id, Specie, Player_ID) VALUES (50,50,'$name',50,50,50,$new_id,'$specie',$player_id)";		
+				$q = "INSERT INTO pet(Hygiene, Hunger, Name, Happiness, Health, Energy, Pet_Id, Specie, Player_ID, Experience) VALUES (50,50,'$name',50,50,50,$new_id,'$specie',$player_id, 0)";		
 				$result = @mysqli_query($dbcon, $q); // Run the query
 				if ($result) { // If the query ran OK
 					header ("location: kitchen.php"); 
