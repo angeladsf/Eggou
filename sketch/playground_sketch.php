@@ -25,6 +25,7 @@ function draw() {
     drawMoney(250, 25, coinIcon, 40, 40, money);
     nHealth.draw_need();
     iconStore.draw_roomIcon();
+    iconHouse1.draw_roomIcon();
     currentLevel.draw_level();
     petName.draw_pet();
     decreaseAllNeeds('playground.php');
