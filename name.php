@@ -9,11 +9,11 @@ if(isset($_GET["specie"])){
     }
 
 	$player_id = $_SESSION['player_id'];
-	$pet_id = $_SESSION['pet_id'];
 
-    $query= ("SELECT MAX(pet_id) FROM pet");
-	$max_id = @mysqli_query ($dbcon, $query);
-	$new_id = ($max_id + 1);
+    $result = mysqli_query($dbcon, "SELECT Pet_Id as id FROM Pet ORDER BY Pet_id DESC LIMIT 1");
+	$row = mysqli_fetch_array($result);
+	$pidmax=$row['id'];
+	$new_id = $pidmax + 1;
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$errors = array(); // Start an errors array
@@ -37,6 +37,14 @@ if(isset($_GET["specie"])){
 				// Make the query
 				$q = "INSERT INTO pet(Hygiene, Hunger, Name, Happiness, Health, Energy, Pet_Id, Specie, Player_ID, Experience) VALUES (50,50,'$name',50,50,50,$new_id,'$specie',$player_id, 0)";		
 				$result = @mysqli_query($dbcon, $q); // Run the query
+				
+				
+				$q1 = "INSERT INTO skill (type, experience, pet_id) VALUES ('a', 0, $new_id);
+				INSERT INTO skill (type, experience, pet_id) VALUES ('b',0, $new_id);
+				INSERT INTO skill (type, experience, pet_id) VALUES ('c',0, $new_id);";		
+				$result1 = @mysqli_query ($dbcon, $q1); 
+				
+				
 				if ($result) { // If the query ran OK
 					header ("location: kitchen.php"); 
 					exit();
@@ -62,8 +70,6 @@ if(isset($_GET["specie"])){
 		} // End of the main Submit conditionals
 		?>
 
-
-
 <!doctype html>
 <html lang=en>
 	<head>
@@ -73,15 +79,42 @@ if(isset($_GET["specie"])){
 	</head>
 
 	<body>
+
+		<style>
+			#ok{
+				padding: 1% 2%;
+				font-size: 12pt;
+				background-color: #639eda;
+				color: white;
+				font-weight: bold;
+				border: none;
+			}
+			#content{
+				padding: 8% 0;
+			}
+
+			#name{
+				padding: 7px 10px;
+				margin: 8px 0;
+				display: inline-block;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-sizing: border-box;
+			}
+
+		</style>
+
 		<div id="container">
 		<?php include("includes/header.php"); ?>
 		<div id="content"><!--Start of the page-specific content-->
 		<div id="after_choice">
 			<h1>It's a <?php echo $specie; ?>!</h1><br>
 			<h2>Now give it a name and you're ready to play!</h2>
+			<br><br>
             <form action="name.php?specie=<?php echo $specie?>" method = 'post'>
-                <span>Name:<span><input type="text"id="name" name = "name" size = '50' maxlength = '20' value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>"> 
-                <input type = 'submit' value = 'OK' >
+                <span>Name: <span><input id = "name" type="text"id="name" name = "name" size = '50' maxlength = '20' value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>"> 
+                <br><br>
+				<input id = "ok" type = 'submit' value = 'OK'>
             </form>
 
 		</div></div></div>

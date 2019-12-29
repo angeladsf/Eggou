@@ -25,7 +25,7 @@
             <img class = 'big_logo' src="../assets/LOGO.png">
             <h2>Thank you for playing Eggou!</h2><br>
             <h3>We hope you had fun</h3>
-            <button class="index_button"><a href="../index.php">HomePage</a></button>
+            <a href="../index.php"><button class="index_button">HomePage</button></a>
         </div>
         <?php include ('../includes/footer.php'); ?>
     </body>

@@ -54,15 +54,17 @@
 				$errors[] = '<p id="err_msg">Your two password do not match.</p>';
 			}
 			if (empty($errors)) { // registar caso não existam erros
-				$query= ("SELECT MAX(player_id) FROM player");
-				$max_id = @mysqli_query ($dbcon, $query);
-				$new_id = ($max_id + 1);
+				$result = mysqli_query($dbcon, "SELECT Player_Id as id FROM Player ORDER BY Player_Id DESC LIMIT 1");
+				$row = mysqli_fetch_array($result);
+				$pidmax=$row['id'];
+				$new_id = $pidmax + 1;
 
 				$date = date("Y-m-d h:i:sa");
 				$sqlDate = date('Y-m-d h:i:sa', strtotime($date));
-				$q = "INSERT INTO player (player_id, username, email, psword, coins, close_time) VALUES ($new_id, '$username', '$e', SHA1('$p'), 20, $sqlDate)";		
+				$q = "INSERT INTO player (player_id, username, email, psword, coins, close_date) VALUES ($new_id, '$username', '$e', SHA1('$p'), 20, '$sqlDate')";		
 				$result = @mysqli_query ($dbcon, $q); 
 
+			
 				if ($result) { // se a query correu
 					header ("location: ../choice.php"); 
 					exit();
@@ -89,20 +91,28 @@
 
 			<div id="midcol" class = 'register_form'>
 				<h2>Membership Registration</h2><br>
-				<h4>All the fields must be filled out.</h4>
-				<h4>If your register is successful, you will be redirected to the Login page.</h4><br>
+				<h5>All the fields must be filled out.</h5>
+				<h5>If your register is successful, you will be redirected to the Login page.</h5><br>
 				<form action="register.php" method="post">
+				
+				<div class = "row">
+				<div class = "left-col">
 					<label class="label" for="username">Username: </label>
-					<input minlength= '8' required id="username" type="text" name="username" size="16" maxlength="16" value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>">&nbsp;<span>8 
-					to 16 characters</span>
-					<br><br><label class="label" for="email">Email Address: </label>
-					<input required id="email" type="text" name="email" size="32" maxlength="32" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" >
+					<input  minlength= '8' required id="username" type="text" name="username" size="16" maxlength="16" value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>">
 					<br><br><label class="label" for="psword1">Password: </label>
-					<input minlength= '8' required id="psword1" type="password" name="psword1" size="16" maxlength="16" value="<?php if (isset($_POST['psword1'])) echo $_POST['psword1']; ?>" >&nbsp;<span>8 
-					to 16 characters</span>
+					<input minlength= '8' required id="psword1" type="password" name="psword1" size="16" maxlength="16" value="<?php if (isset($_POST['psword1'])) echo $_POST['psword1']; ?>" >
+				
+				</div><div class = "right-col">
+					
+				<label class="label" for="email">Email Address: </label>
+					<input required id="email" type="text" name="email" size="16" maxlength="32" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" >
+					
 					<br><br><label class="label" for="psword2">Confirm Password: </label>
 					<input required id="psword2" type="password" name="psword2" size="16" maxlength="16" value="<?php if (isset($_POST['psword2'])) echo $_POST['psword2']; ?>" >
-					<br><br><p><input id="submit" type="submit" name="submit" value="Register"></p>
+					</div>
+				</div>
+					<br><p><input id="submit" type="submit" name="submit" value="Register"></p>
+				
 				</form>
 
 		</div></div></div>

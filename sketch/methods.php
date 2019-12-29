@@ -1,6 +1,6 @@
 <?php
     //VARIÁVEIS DAS NECESSIDADES
-    $q_nec = ("SELECT hunger, energy, health, happiness, hygiene, name, experience FROM pet where player_id = $player_id");
+    $q_nec = ("SELECT hunger, energy, health, happiness, hygiene, name, experience, specie FROM pet where player_id = $player_id");
     $queryNec = @mysqli_query($dbcon, $q_nec);
     $rowNec = mysqli_fetch_array ( $queryNec, MYSQLI_ASSOC ) ;
     $hunger = $rowNec['hunger'];
@@ -10,6 +10,7 @@
     $hygiene = $rowNec['hygiene'];
     $name = $rowNec['name'];
     $xp = $rowNec['experience'];
+    $specie = $rowNec['specie'];
 
     //VARIÁVEIS DO JOGADOR
     $q_jog = ("SELECT coins FROM player where player_id = ".$player_id."");
@@ -17,7 +18,7 @@
     $rowJog = mysqli_fetch_array ( $queryJog, MYSQLI_ASSOC ) ;
     $money = $rowJog['coins'];
 
-    global $hunger, $energy, $health, $happiness, $hygiene, $name, $money, $xp;
+    global $hunger, $energy, $health, $happiness, $hygiene, $name, $money, $xp, $specie;
 ?>
 
 <script>
@@ -35,7 +36,9 @@ let needHeight = canvasHeight / 12;
 let needPosY = canvasHeight - canvasHeight/6;
 
 function preload() {
+  skillsbg = loadImage('../eggou/assets/canyon.jpg');
   storeIcon = loadImage('../eggou/assets/store.png');
+  skillIcon = loadImage('../eggou/assets/dumbbell.png');
   houseIcon = loadImage('../eggou/assets/house.png');
   coinIcon = loadImage('../eggou/assets/coin.png');
   rArrowIcon = loadImage('../eggou/assets/right_arrow.png');
@@ -47,6 +50,12 @@ function preload() {
   animalIMG = loadImage('../eggou/assets/dino.png');
   treeIMG = loadImage('../eggou/assets/tree.png');
   backgroundIMG = loadImage('../eggou/assets/back.png');
+  babydragon = backgroundIMG = loadImage('../eggou/assets/babydrag.png');
+  kiddragon = backgroundIMG = loadImage('../eggou/assets/kiddrag.png');
+  adultdragon = backgroundIMG = loadImage('../eggou/assets/adultdrag.png');
+  babydino = backgroundIMG = loadImage('../eggou/assets/babydino.png');
+  kiddino = backgroundIMG = loadImage('../eggou/assets/kiddino.png');
+  adultdino = backgroundIMG = loadImage('../eggou/assets/adultdino.png');
 }
 
 //Variáveis do Jogador
@@ -62,7 +71,7 @@ let health = "<?php echo $health; ?>";
 let happiness = "<?php echo $happiness; ?>";
 
 let name = "<?php echo $name; ?>";
-
+let specie = "<?php echo $specie; ?>";
 
 //Ícone da loja e playground
 class room_icon {
@@ -147,13 +156,14 @@ class inventoryItem{
 
 
 class level {
-    constructor(posX, posY, width, height, exp) {
+    constructor(posX, posY, width, height, exp, specie) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
         this.exp = exp;
         this.level = level;
+        this.specie = specie;
     }
 
     draw_level(){
@@ -177,12 +187,36 @@ class level {
             // saber a idade
             if (this.level >= 0 && this.level <= 3){
                 this.age = "Baby";
+                if(this.specie == "Dragon"){
+                    image(babydragon, canvasWidth/2-70, canvasHeight/2 - 100, 145, 210);
+                }
+                else{
+                    image(babydino, canvasWidth/2-100, canvasHeight/2 - 100, 190, 210);
+                }
             }else if(this.level >= 4 && this.level <= 10){
                 this.age = "Junior";
+                if(this.specie == "Dragon"){
+                    image(kiddragon, canvasWidth/2 - 60, canvasHeight/2-100, 150, 250);
+                }
+                else{
+                    image(kiddino, canvasWidth/2-110, canvasHeight/2 - 50, 230, 210);
+                }
             }else if(this.level >= 11 && this.level <= 25){
                 this.age = "Adult";
+                if(this.specie == "Dragon"){
+                    image(adultdragon, canvasWidth/2-150, canvasHeight/2-70, 300, 220);
+                }
+                else{
+                    image(adultdino, canvasWidth/2-123, canvasHeight/2 - 70, 270, 220);
+                }
             }else if(this.level >= 26 && this.level <= 30){
                 this.age = "Senior";
+                if(this.specie == "Dragon"){
+                    image(adultdragon, canvasWidth/2-150, canvasHeight/2-70, 300, 220);
+                }
+                else{
+                    image(adultdino, canvasWidth/2-123, canvasHeight/2 - 70, 270, 220);
+                }
             }
 
 
@@ -194,7 +228,7 @@ class level {
         fill(255, 255, 255, 80);
         rect(this.posX - 20, this.posY-20, this.width, this.height);
         fill(0);
-        text("Level: "+ this.level, this.posX, this.posY);
+        text("Level: " + this.level , this.posX, this.posY);
         text(this.age, this.posX + 70, this.posY);
     }
 
@@ -243,8 +277,9 @@ function setup_main() {
     iconHouse = new room_icon(100, 20, houseIcon, 50, 50);
     iconHouse1 = new room_icon(1200, 20, houseIcon, 50, 50);
     iconPlayground = new room_icon(1200, 25, playgroundIcon, 50, 50);
+    iconSkill = new room_icon(1100, 20, skillIcon, 50, 50);
     kitchen = new room(550, 50, 'Kitchen');
-    currentLevel = new level(900, 50, 150, 30, exp);
+    currentLevel = new level(900, 50, 150, 30, exp, specie);
     bathroom = new room(550, 50, 'Bathroom');
     bedroom = new room(550, 50, 'Bedroom');
     lab = new room(550, 50, 'Lab');
@@ -299,6 +334,11 @@ function decreaseAllNeeds(room) {
     var arrayN = [nHygiene, nHunger, nEnergy, nHappiness, nHealth];
     var arrayS = ['#secretHygiene', '#secretHunger', '#secretEnergy', '#secretHappiness', '#secretHealth']
     decrease_need(arrayN, arrayS, room);
+
+    if(nHealth.value <= 0){
+        window.open('gameover.php', '_self');
+    }
+
 }
 
 </script>

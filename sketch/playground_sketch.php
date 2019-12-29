@@ -30,6 +30,10 @@ function draw() {
     petName.draw_pet();
     decreaseAllNeeds('playground.php');
 
+    if(currentLevel.level >= 5){
+        iconSkill.draw_roomIcon();
+    }
+
     draw_game(canvasWidth * 0.2, 200, 180, 60, "Hop", "#864bf3");
     draw_game(canvasWidth * 0.6, 200, 180, 60, "2048", "#f67373");
 }
@@ -50,6 +54,9 @@ function mouseClicked() {
     }else if (whereIsMouseX > canvasWidth * 0.6 && whereIsMouseY > 200 &&
         whereIsMouseX < (canvasWidth * 0.6 + 200) && whereIsMouseY < 260) {
         window.open('2048.php', '_self');
+    }else if (whereIsMouseX > iconSkill.posX && whereIsMouseY > iconSkill.posY &&
+        whereIsMouseX < (iconSkill.posX + iconSkill.sizeX) && whereIsMouseY < (iconSkill.posY + iconSkill.sizeY)) {
+        window.open('skills.php', '_self');
     }
 
 }
