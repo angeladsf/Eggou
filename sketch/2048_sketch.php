@@ -29,16 +29,66 @@ function centerCanvas() {
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
 }
-
-
-
 function setup() {
     setup_main();
     cnv = createCanvas(400, 400);
     centerCanvas();
     noLoop();
 
-    resetSketch();
+    grid = blankGrid();
+  gridDup = blankGrid();
+  
+  imagesSizes = {
+    "2": {
+      size: 64,
+      img: img1
+    },
+    "4": {
+      size: 64,
+      img: img2
+    },
+    "8": {
+      size: 64,
+      img: img3
+    },
+    "16": {
+      size: 64,
+      img: img4
+    },
+    "32": {
+      size: 64,
+      img: img5
+    },
+    "64": {
+      size: 64,
+      img: img6
+    },
+    "128": {
+      size: 36,
+      img: img7
+    },
+    "256": {
+      size: 36,
+      img: img8
+    },
+    "512": {
+      size: 36,
+      img: img9
+    },
+    "1024": {
+      size: 18,
+      img: img10
+    },
+    "2048": {
+      size: 18,
+      img: img11
+    }
+  
+}
+  
+  addNumber();
+  addNumber();
+  updateCanvas();
 }
 
 
@@ -49,7 +99,7 @@ function updateCanvas() {
   
   drawGrid();
   
-  select('#score').html("Score: " + score);
+  select('#score').html("Pontuação: " + score);
   
   let gameover = isGameOver();
     if(gameover){
@@ -57,8 +107,7 @@ function updateCanvas() {
       fill(255);
       stroke(0);
       rect(200, 200, 390, 80, 20);
-      drawText('Ooooh! \nYou lost :( Press ENTER to try again.',
-
+      drawText('Ooooh! \nPressione ENTER para tentar de novo.',
 		color(255),
 		26,
 		width / 2,
@@ -66,7 +115,7 @@ function updateCanvas() {
 
         updateNeeds();
         money = parseInt(money) + parseInt(score/100);
-        exp = parseFloat(exp) + parseFloat(score/300);
+        exp = parseFloat(exp) + parseFloat(score/150);
 
         $.post({
             url: "hop.php",
@@ -91,7 +140,7 @@ function updateCanvas() {
       fill(255);
       stroke(0);
       rect(200, 200, 390, 80, 20);
-      drawText('You made it!!\r\nPress ENTER to play again.',
+      drawText('You made it! Press Restart to play again!',
 		color(255),
 		26,
 		width / 2,
@@ -376,69 +425,6 @@ function drawGrid(){
 }
 
 
-
-function keyPressed(){
-  if(keyCode === ENTER){
-        resetSketch();
-      }
-}
-
-function resetSketch(){
-  grid = blankGrid();
-  gridDup = blankGrid();
-  
-  imagesSizes = {
-    "2": {
-      size: 64,
-      img: img1
-    },
-    "4": {
-      size: 64,
-      img: img2
-    },
-    "8": {
-      size: 64,
-      img: img3
-    },
-    "16": {
-      size: 64,
-      img: img4
-    },
-    "32": {
-      size: 64,
-      img: img5
-    },
-    "64": {
-      size: 64,
-      img: img6
-    },
-    "128": {
-      size: 36,
-      img: img7
-    },
-    "256": {
-      size: 36,
-      img: img8
-    },
-    "512": {
-      size: 36,
-      img: img9
-    },
-    "1024": {
-      size: 18,
-      img: img10
-    },
-    "2048": {
-      size: 18,
-      img: img11
-    }
-}
-  
-  addNumber();
-  addNumber();
-  updateCanvas();
-    
-}
 }
 
 </script>
