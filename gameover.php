@@ -21,7 +21,7 @@ $result = @mysqli_query($dbcon, $q);
             <h3>Unfortunately, <?php echo $name?> has reached the end of 
             its life span. Even dragons and dinosaurs die once they are too old or 
             have poor health. But this isn't the end of your journey!</h3>
-            <a href="../session/login.php"><button class="index_button">Start over</button></a>
+            <a href="../eggou/session/login.php"><button class="index_button">Start over</button></a>
         </div>
     </body>
     <?php include ( 'includes/footer.php' ) ;?>

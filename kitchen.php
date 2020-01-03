@@ -50,6 +50,14 @@
 
 <!doctype html>
 <html lang=en>
+<style>
+body{
+background-image: url('assets/background2.jpg')no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;}
+
+</style>
 	<?php include ('includes/head.php'); ?>		
 	<body>
 		<div id='container'>

@@ -19,7 +19,10 @@ html {
 }
 
 body{
-    background-image: url('assets/background2.jpg')no-repeat center center fixed;
+    background-image: url('../eggou/assets/background2.jpg');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
     background-size: cover;
     height: 100%;
     overflow: hidden;

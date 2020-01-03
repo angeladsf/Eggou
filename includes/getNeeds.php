@@ -23,7 +23,7 @@ $countC = 0;
 
 
 if(isset($_COOKIE["skillB"])){
-	if (strval($_COOKIE["skillB"]) <= strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countB == 0) {
+	if (strval($_COOKIE["skillB"]) == strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countB == 0) {
 		setcookie("skillB", "", time() - 6000, '/');
 		$countB++;
 		$q = ("UPDATE skill SET experience = experience + 0.5 WHERE pet_id = $pet_id and type = 'b'");
@@ -32,7 +32,7 @@ if(isset($_COOKIE["skillB"])){
 }
 
 if(isset($_COOKIE["skillA"])){
-	if (strval($_COOKIE["skillA"]) <= strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countA == 0) {
+	if (strval($_COOKIE["skillA"]) == strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countA == 0) {
 		setcookie("skillA", "", time() - 6000, '/');
 		$countA++;
 		$q = ("UPDATE skill SET experience = experience + 0.5 WHERE pet_id = $pet_id and type = 'a'");
@@ -41,7 +41,7 @@ if(isset($_COOKIE["skillA"])){
 }
 
 if(isset($_COOKIE["skillC"])){
-	if (strval($_COOKIE["skillC"]) <= strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countC == 0) {
+	if (strval($_COOKIE["skillC"]) == strval(date("Y/m/d H:i:s", strtotime('-1 hour'))) && $countC == 0) {
 		setcookie("skillC", "", time() - 6000, '/');
 		$countC++;
 		$q = ("UPDATE skill SET experience = experience + 0.5 WHERE pet_id = $pet_id and type = 'c'");

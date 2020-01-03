@@ -8,20 +8,6 @@ let gridDup;
 let img1, img2, im3, img4, img5, img6, img7, img8, img9, img10, img11;
 let imagesSizes;
 
-function preload(){
-  img1 = loadImage('assets/2.png')
-  img2 = loadImage('assets/4.png')
-  img3 = loadImage('assets/8.png')
-  img4 = loadImage('assets/16.png')
-  img5 = loadImage('assets/32.png')
-  img6 = loadImage('assets/64.png')
-  img7 = loadImage('assets/128.png')
-  img8= loadImage('assets/256.png')
-  img9= loadImage('assets/512.png')
-  img10 = loadImage('assets/1024.png')
-  img11= loadImage('assets/2048.png')
-}
-
 var cnv;
 
 function centerCanvas() {
@@ -99,7 +85,7 @@ function updateCanvas() {
   
   drawGrid();
   
-  select('#score').html("Pontuação: " + score);
+  select('#score').html("Scrore: " + score);
   
   let gameover = isGameOver();
     if(gameover){
@@ -107,15 +93,11 @@ function updateCanvas() {
       fill(255);
       stroke(0);
       rect(200, 200, 390, 80, 20);
-      drawText('Ooooh! You lost :( \n Press Restart to try again.',
-		color(255),
-		26,
-		width / 2,
-		height / 2 );
+      drawText('Ooooh! You lost :( \n Press Restart to try again.', color(0), 26, width / 2, height / 2 );
 
         updateNeeds();
         money = parseInt(money) + parseInt(score/100);
-        exp = parseFloat(exp) + parseFloat(score/150);
+        exp = parseFloat(exp) + parseFloat(score/400);
 
         $.post({
             url: "hop.php",

@@ -122,9 +122,6 @@ function draw() {
     if(dino.hits(t)){
       textSize(30);
       text("Game over!", width/2, height/2);
-      /*button = createButton("Novo jogo");
-      button.position(310, 215);
-      button.mousePressed(resetSketch);*/
 
      
       if(parseFloat(nHygiene.value -  score/2) > 0){
@@ -148,7 +145,7 @@ function draw() {
         nHappiness.value = 100;
       }
       money = parseInt(money) + parseInt(score);
-      exp = parseFloat(exp) + parseFloat(score/4);
+      exp = parseFloat(exp) + parseFloat(score/5);
 
       $.post({
             url: "hop.php",

@@ -57,6 +57,17 @@ function preload() {
   kiddino = loadImage('../eggou/assets/kiddino.png');
   adultdino = loadImage('../eggou/assets/adultdino.png');
   mountain = loadImage('../eggou/assets/mountain.png');
+  img1 = loadImage('../eggou/assets/2.png')
+  img2 = loadImage('../eggou/assets/4.png')
+  img3 = loadImage('../eggou/assets/8.png')
+  img4 = loadImage('../eggou/assets/16.png')
+  img5 = loadImage('../eggou/assets/32.png')
+  img6 = loadImage('../eggou/assets/64.png')
+  img7 = loadImage('../eggou/assets/128.png')
+  img8= loadImage('../eggou/assets/256.png')
+  img9= loadImage('../eggou/assets/512.png')
+  img10 = loadImage('../eggou/assets/1024.png')
+  img11= loadImage('../eggou/assets/2048.png')
 }
 
 //Variáveis do Jogador
