@@ -22,7 +22,8 @@ function setup(){
 }
 
 function draw() {
-    background('#8cb8e4');
+    image(mountain, 0, 100, canvasWidth, canvasHeight-100);
+    background(	140, 184, 228, 200);
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     bathroom.draw_room();

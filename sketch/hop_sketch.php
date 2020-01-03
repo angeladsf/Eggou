@@ -67,9 +67,19 @@ let x2;
 let ScrollSpeed = 2;
 
 
+var cnv;
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
+
+
 function setup() {
   setup_main();
-  createCanvas(700, 400);
+  cnv = createCanvas(700, 400);
+  centerCanvas();
   dino = new Animal();
   textAlign(CENTER);
   speed = 1;
@@ -115,8 +125,7 @@ function draw() {
       /*button = createButton("Novo jogo");
       button.position(310, 215);
       button.mousePressed(resetSketch);*/
-      textSize(15);
-      text("Pressiona f5 para recomeçar!", width/2,215);
+
      
       if(parseFloat(nHygiene.value -  score/2) > 0){
         nHygiene.value = parseFloat(nHygiene.value - score/2);
@@ -139,7 +148,7 @@ function draw() {
         nHappiness.value = 100;
       }
       money = parseInt(money) + parseInt(score);
-      exp = parseFloat(exp) + parseFloat(score/2);
+      exp = parseFloat(exp) + parseFloat(score/4);
 
       $.post({
             url: "hop.php",
@@ -169,6 +178,6 @@ function draw() {
   dino.move();
   
   textSize(20);
-  text("Pontuação: " + score, width/2, 20);
+  text("Score: " + score, width/2, 20);
 }
 </script>

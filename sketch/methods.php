@@ -33,7 +33,7 @@ let red = '#f22727'
 
 let needWidth = 100;
 let needHeight = canvasHeight / 12;
-let needPosY = canvasHeight - canvasHeight/6;
+let needPosY = canvasHeight - canvasHeight/7;
 
 function preload() {
   skillsbg = loadImage('../eggou/assets/canyon.jpg');
@@ -50,12 +50,13 @@ function preload() {
   animalIMG = loadImage('../eggou/assets/dino.png');
   treeIMG = loadImage('../eggou/assets/tree.png');
   backgroundIMG = loadImage('../eggou/assets/back.png');
-  babydragon = backgroundIMG = loadImage('../eggou/assets/babydrag.png');
-  kiddragon = backgroundIMG = loadImage('../eggou/assets/kiddrag.png');
-  adultdragon = backgroundIMG = loadImage('../eggou/assets/adultdrag.png');
-  babydino = backgroundIMG = loadImage('../eggou/assets/babydino.png');
-  kiddino = backgroundIMG = loadImage('../eggou/assets/kiddino.png');
-  adultdino = backgroundIMG = loadImage('../eggou/assets/adultdino.png');
+  babydragon = loadImage('../eggou/assets/babydrag.png');
+  kiddragon = loadImage('../eggou/assets/kiddrag.png');
+  adultdragon = loadImage('../eggou/assets/adultdrag.png');
+  babydino = loadImage('../eggou/assets/babydino.png');
+  kiddino = loadImage('../eggou/assets/kiddino.png');
+  adultdino = loadImage('../eggou/assets/adultdino.png');
+  mountain = loadImage('../eggou/assets/mountain.png');
 }
 
 //Variáveis do Jogador
@@ -84,22 +85,6 @@ class room_icon {
     }
     draw_roomIcon() {
         image(this.icon, this.posX, this.posY, this.sizeX, this.sizeY);
-    }
-}
-
-
-
-class pet {
-    constructor(name, posX, posY) {
-        this.posX = posX;
-        this.posY = posY;
-        this.name = name;
-    }
-    draw_pet() {
-        fill(134,75,243, 80)
-        rect(this.posX - 20, this.posY - 30, 140, 50, 40);
-        fill(0);
-        text(this.name, this.posX, this.posY);
     }
 }
 
@@ -246,11 +231,13 @@ class need {
         this.value = value;
     }
     draw_need() {
+        stroke(0)
         fill('#bbb');
         rect(this.posX, this.posY, this.width, this.height);
         fill(this.color);
         rect(this.posX, this.posY, this.value, this.height);
         fill('#fff');
+        noStroke();
         textSize(14);
         textStyle(BOLD);
         text(this.name, this.posX + this.width / 5, this.posY + this.height / 2);
@@ -283,22 +270,28 @@ function setup_main() {
     bathroom = new room(550, 50, 'Bathroom');
     bedroom = new room(550, 50, 'Bedroom');
     lab = new room(550, 50, 'Lab');
-    petName = new pet(name, 90, needPosY + 25);
 }
 
 
 // desenhar os icons principais nos quartos da casa
 function drawNeedsIcons() {
     drawInventory(canvasWidth * 0.85, canvasHeight * 0.17, canvasWidth * 0.1, canvasHeight * 0.65);
+    fill(255,255,255, 100);
+    noStroke();
+    rect(0, canvasHeight - 95, canvasWidth, 100);
+    stroke(0);
+    strokeWeight(1);
     nHappiness.draw_need();
     nHygiene.draw_need();
     nHunger.draw_need();
     nEnergy.draw_need();
-    drawMoney(250, 25, coinIcon, 40, 40, money);
     nHealth.draw_need();
+    noStroke();
+    drawMoney(250, 25, coinIcon, 40, 40, money);
     iconStore.draw_roomIcon();
     currentLevel.draw_level();
-    petName.draw_pet();
+    textSize(20);
+    text(name, canvasWidth * 0.06, canvasHeight * 0.9);
 }
 
 

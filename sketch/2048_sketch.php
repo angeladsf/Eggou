@@ -54,10 +54,20 @@ let grid;
 let score = 0;
 let gridDup;
 
+var cnv;
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
+
+
 
 function setup() {
     setup_main();
-    createCanvas(400, 400);
+    cnv = createCanvas(400, 400);
+    centerCanvas();
     noLoop();
 
     grid = blankGrid();
@@ -75,11 +85,11 @@ function updateCanvas() {
   
   drawGrid();
   
-  select('#score').html("Pontuação: " + score);
+  select('#score').html("Score: " + score);
   
   let gameover = isGameOver();
     if(gameover){
-      drawText('Ooooh! \nPressione f5 para tentar de novo.',
+      drawText('Ooooh! \nYou lost :(',
 		color(255),
 		26,
 		width / 2,
@@ -87,7 +97,7 @@ function updateCanvas() {
 
         updateNeeds();
         money = parseInt(money) + parseInt(score/100);
-        exp = parseFloat(exp) + parseFloat(score/150);
+        exp = parseFloat(exp) + parseFloat(score/300);
 
         $.post({
             url: "hop.php",

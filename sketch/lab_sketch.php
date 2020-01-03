@@ -42,7 +42,8 @@ function setup() {
 }
 
 function draw() {
-    background('#f9a3a3');
+    image(mountain, 0, 100, canvasWidth, canvasHeight-100);
+    background(	249, 163, 163, 200);
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     lab.draw_room();
