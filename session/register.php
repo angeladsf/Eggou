@@ -76,7 +76,7 @@
 				} 
 				mysqli_close($dbcon); // fechar conexão à base de dados
 
-				include ('includes/footer.php'); 
+				include ('../includes/footer.php'); 
 				exit();
 			} else { // mostrar erros
 				echo '<h3 class = "title_err">Error!</h3>

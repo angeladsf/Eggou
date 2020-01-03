@@ -1,58 +1,26 @@
 <?php include ( 'methods.php' ) ; ?>
 <script>
 
-let colorsSizes = {
-  "2": {
-    size: 64,
-    color: "#FFF999"
-  },
-  "4": {
-    size: 64,
-    color: "#F35956"
-  },
-  "8": {
-    size: 64,
-    color: "#CCF9AA"
-  },
-  "16": {
-    size: 64,
-    color: "#9659A7"
-  },
-  "32": {
-    size: 64,
-    color: "#2494C1"
-  },
-  "64": {
-    size: 64,
-    color: "#49BB6C"
-  },
-  "128": {
-    size: 36,
-    color: "#9659A7"
-  },
-  "256": {
-    size: 36,
-    color: "#49BB6C"
-  },
-  "512": {
-    size: 36,
-    color: "#2494C1"
-  },
-  "1024": {
-    size: 18,
-    color: "#CCF9AA"
-  },
-  "2048": {
-    size: 18,
-    color: "#F1C500"
-  }
-}
-
-
 
 let grid;
 let score = 0;
 let gridDup;
+let img1, img2, im3, img4, img5, img6, img7, img8, img9, img10, img11;
+let imagesSizes;
+
+function preload(){
+  img1 = loadImage('assets/2.png')
+  img2 = loadImage('assets/4.png')
+  img3 = loadImage('assets/8.png')
+  img4 = loadImage('assets/16.png')
+  img5 = loadImage('assets/32.png')
+  img6 = loadImage('assets/64.png')
+  img7 = loadImage('assets/128.png')
+  img8= loadImage('assets/256.png')
+  img9= loadImage('assets/512.png')
+  img10 = loadImage('assets/1024.png')
+  img11= loadImage('assets/2048.png')
+}
 
 
 function setup() {
@@ -60,14 +28,10 @@ function setup() {
     createCanvas(400, 400);
     noLoop();
 
-    grid = blankGrid();
-    gridDup = blankGrid();
-
-    addNumber();
-    addNumber();
-    updateCanvas();
-    
+    resetSketch();
 }
+
+
 
 
 function updateCanvas() {
@@ -79,7 +43,11 @@ function updateCanvas() {
   
   let gameover = isGameOver();
     if(gameover){
-      drawText('Ooooh! \nPressione f5 para tentar de novo.',
+      rectMode(CENTER);
+      fill(255);
+      stroke(0);
+      rect(200, 200, 390, 80, 20);
+      drawText('Ooooh! \nPressione ENTER para tentar de novo.',
 		color(255),
 		26,
 		width / 2,
@@ -108,7 +76,11 @@ function updateCanvas() {
     
     let gamewon = isGameWon();
     if(gamewon){
-      drawText('Conseguiu 2048\r\nPressione [f5] para recomeçar.',
+      rectMode(CENTER);
+      fill(255);
+      stroke(0);
+      rect(200, 200, 390, 80, 20);
+      drawText('Conseguiu 2048!!\r\nPressione ENTER para recomeçar.',
 		color(255),
 		26,
 		width / 2,
@@ -377,7 +349,7 @@ function drawGrid(){
         stroke(0);
       }
       if(val != 0){
-        fill(colorsSizes[s].color);
+        image(imagesSizes[s].img);
       } else{
         noFill();
       }
@@ -386,10 +358,75 @@ function drawGrid(){
         textAlign(CENTER,CENTER);
         noStroke();
         fill(0);
-        textSize(colorsSizes[s].size);
-        text(val, i*w + w/2, j*w + w/2);
+        textSize(imagesSizes[s].size);
+        image(imagesSizes[s].img, i*w +w/2-50, j*w+w/2 -50, 100, 100);
     }
   }
+}
+
+
+
+function keyPressed(){
+  if(keyCode === ENTER){
+        resetSketch();
+      }
+}
+
+function resetSketch(){
+  grid = blankGrid();
+  gridDup = blankGrid();
+  
+  imagesSizes = {
+    "2": {
+      size: 64,
+      img: img1
+    },
+    "4": {
+      size: 64,
+      img: img2
+    },
+    "8": {
+      size: 64,
+      img: img3
+    },
+    "16": {
+      size: 64,
+      img: img4
+    },
+    "32": {
+      size: 64,
+      img: img5
+    },
+    "64": {
+      size: 64,
+      img: img6
+    },
+    "128": {
+      size: 36,
+      img: img7
+    },
+    "256": {
+      size: 36,
+      img: img8
+    },
+    "512": {
+      size: 36,
+      img: img9
+    },
+    "1024": {
+      size: 18,
+      img: img10
+    },
+    "2048": {
+      size: 18,
+      img: img11
+    }
+}
+  
+  addNumber();
+  addNumber();
+  updateCanvas();
+    
 }
 }
 
