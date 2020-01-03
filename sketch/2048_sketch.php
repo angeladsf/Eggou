@@ -22,10 +22,20 @@ function preload(){
   img11= loadImage('assets/2048.png')
 }
 
+var cnv;
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
+
+
 
 function setup() {
     setup_main();
-    createCanvas(400, 400);
+    cnv = createCanvas(400, 400);
+    centerCanvas();
     noLoop();
 
     resetSketch();
@@ -39,7 +49,7 @@ function updateCanvas() {
   
   drawGrid();
   
-  select('#score').html("Pontuação: " + score);
+  select('#score').html("Score: " + score);
   
   let gameover = isGameOver();
     if(gameover){
@@ -47,7 +57,8 @@ function updateCanvas() {
       fill(255);
       stroke(0);
       rect(200, 200, 390, 80, 20);
-      drawText('Ooooh! \nPressione ENTER para tentar de novo.',
+      drawText('Ooooh! \nYou lost :( Press ENTER to try again.',
+
 		color(255),
 		26,
 		width / 2,
@@ -55,7 +66,7 @@ function updateCanvas() {
 
         updateNeeds();
         money = parseInt(money) + parseInt(score/100);
-        exp = parseFloat(exp) + parseFloat(score/150);
+        exp = parseFloat(exp) + parseFloat(score/300);
 
         $.post({
             url: "hop.php",
@@ -80,7 +91,7 @@ function updateCanvas() {
       fill(255);
       stroke(0);
       rect(200, 200, 390, 80, 20);
-      drawText('Conseguiu 2048!!\r\nPressione ENTER para recomeçar.',
+      drawText('You made it!!\r\nPress ENTER to play again.',
 		color(255),
 		26,
 		width / 2,

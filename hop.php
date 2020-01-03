@@ -40,14 +40,47 @@
 ?>
 <!doctype html>
 <html lang=en>
-	<?php include ( 'includes/head.php' ); ?>
+    <?php include ( 'includes/head.php' ); ?>
+    
+    <style>
+
+        body{
+            text-align:center;
+        }
+
+        a .game_button {
+            padding: 1% 3%;
+            font-size: 13pt;
+            background-color: #50c936;
+            border: none;
+            color:white;
+            margin-top: 5%;
+        }
+
+        a:last-child .game_button {
+            background-color: #639eda;
+        }
+
+        a .game_button {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        #container{
+            margin-bottom: 30%;
+        }
+
+    </style>
 	<body>
-		<div id='container'><?php 
+		<div id='container'>
+        <?php 
 		include ( 'includes/header.php' );
 		include ( 'sketch/hop_sketch.php' ) ;
 		include ( 'includes/secretIDs.php' );?>
-        <a href="playground.php" target="_parent"><button>Go back</button></a>
-	</div>
+        <a href="hop.php"><button class="game_button">Restart</button></a>
+        <a href="playground.php"><button class="game_button">Go Back</button></a>
+     </div>
 	</body>
 	<?php include ( 'includes/footer.php' ) ; ?>
 </html>

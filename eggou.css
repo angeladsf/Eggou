@@ -18,11 +18,11 @@ html {
     text-shadow: 1px 1px #666666;
 }
 
-body {
-    background-image: url('assets/background2.jpg');
-    background-repeat: no-repeat;
+body{
+    background-image: url('assets/background2.jpg')no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
+    height: 100%;
+    overflow: hidden;
 }
 
 #footer {
@@ -101,6 +101,8 @@ a .index_button {
     color: white;
     font-weight: bold;
 }
+
+
 
 #submit {
     padding: 3% 4%;
@@ -207,3 +209,4 @@ form span {
 #secretHigiene, #secretFome, #secretEnergia, #secretSaude, #secretFelicidade{
     display:none;
 }
+

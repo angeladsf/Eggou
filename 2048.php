@@ -40,14 +40,47 @@
 ?>
 <!doctype html>
 <html lang=en>
-	<?php include ( 'includes/head.php' ); ?>
+    <?php include ( 'includes/head.php' ); ?>
+    <style>
+
+body{
+    text-align:center;
+}
+
+a .game_button {
+    padding: 1% 3%;
+    font-size: 13pt;
+    background-color: #50c936;
+    border: none;
+    color:white;
+    margin-top: 4%;
+    margin-bottom:0.5%;
+}
+
+a .game_button {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+#container{
+    margin-bottom: 30%;
+}
+
+</style>
 	<body>
-		<div id='container'><?php 
+    
+		<div id='container'>
+        
+            <?php 
 		include ( 'includes/header.php' );
 		include ( 'sketch/2048_sketch.php' ) ;
 		include ( 'includes/secretIDs.php' );?>
-        <a href="playground.php" target="_parent"><button>Go back</button></a>
-        <p  style="font-size:32pt" id="score"></p>
+        
+        <a href="2048.php"><button class="game_button">Restart</button></a>
+        <a href="playground.php"><button class="game_button" style="background-color:#639eda">Go Back</button></a>
+        <p style="font-size:18pt;" id="score"></p>
+        <p style="font-size:13pt;">Win the game by reaching the golden dragon!</p>
 	</div>
 	</body>
 	<?php include ( 'includes/footer.php' ) ; ?>

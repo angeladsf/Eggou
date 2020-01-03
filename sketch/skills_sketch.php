@@ -87,6 +87,11 @@ function getTime(){
     var date = new Date(); 
 
     date.setTime(date.getTime()+(120000));
+    currentMonth = date.getMonth() + 1;
+    currentMonth = ("0" + currentMonth).slice(-2);
+    currentDay = date.getDate();
+    currentDay = ("0" + currentDay).slice(-2);
+
     currentHours = date.getHours();
     currentHours = ("0" + currentHours).slice(-2);
     currentSeconds = date.getSeconds();
@@ -94,7 +99,7 @@ function getTime(){
     currentMinutes = date.getMinutes();
     currentMinutes = ("0" + currentMinutes).slice(-2);
 
-    var datetime = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(); 
+    var datetime = date.getFullYear()+'/'+currentMonth+'/'+currentDay; 
     datetime += ' '+currentHours+':'+ currentMinutes +':'+currentSeconds; 
 
     return datetime;
@@ -111,7 +116,6 @@ function draw() {
     nHealth.draw_need();
     iconStore.draw_roomIcon();
     currentLevel.draw_level();
-    petName.draw_pet();
     decreaseAllNeeds('skills.php');
     iconPlayground.draw_roomIcon();
     

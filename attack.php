@@ -1,8 +1,13 @@
 <?php 
     require ('session/mysql_connection.php');
     session_start() ;
-    $name = $_SESSION[ 'pet_name' ];
     $player_id = $_SESSION[ 'player_id' ];
+
+    $q1 = ("SELECT Name from pet where player_id = $player_id");
+    $result1 = @mysqli_query($dbcon, $q1);
+    $row = mysqli_fetch_array ( $result1, MYSQLI_ASSOC ) ;
+    $name = $row['Name'];
+
 
     $q = ("UPDATE inventory set quantity = 0 where player_id = $player_id");
     $result = @mysqli_query($dbcon, $q);

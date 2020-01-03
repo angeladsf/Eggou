@@ -2,7 +2,7 @@
 
 <script>
 
-let x = canvasWidth * 0.88;
+let x = canvasWidth * 0.875;
 let y = 200;
 let s = 70;
 let isVisible = true;
@@ -12,8 +12,10 @@ function setup() {
     setup_main();
 }
 
+
 function draw() {
-    background('#ba96fd');
+    image(mountain, 0, 100, canvasWidth, canvasHeight-100);
+    background(186,	150, 253, 200);
     drawNeedsIcons();
     bedroom.draw_room();
     iconPlayground.draw_roomIcon();
@@ -22,8 +24,8 @@ function draw() {
 
     // escurecer o ecrã se a luz estiver apagada
     if (!isVisible) {
-        fill(20,20,20,50)
-        rect(0, 0, canvasWidth, canvasHeight, 0)
+        fill(20,20,20,70);
+        rect(0, 0, canvasWidth, canvasHeight, 0);
     }
 
     setTimeout(function() {

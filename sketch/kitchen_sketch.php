@@ -40,7 +40,8 @@ function setup() {
 
 
 function draw() {
-    background('#f9f793');
+    image(mountain, 0, 100, canvasWidth, canvasHeight-100);
+    background(249, 247, 147, 200);
     drawNeedsIcons();
     iconPlayground.draw_roomIcon();
     kitchen.draw_room();
